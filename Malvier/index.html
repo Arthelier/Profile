@@ -151,15 +151,15 @@
         }
         @keyframes itemIn{ to{ opacity:1; transform:translateY(0); } }
 
-        .achievement-grid { display:flex; flex-direction:column; }
-        .achievement-item {
+        .relations-grid { display:flex; flex-direction:column; }
+        .relations-item {
             padding: 16px 2px; border-bottom: 1px solid var(--line);
             transition: transform 0.3s cubic-bezier(.22,1,.36,1), padding-left 0.3s cubic-bezier(.22,1,.36,1);
         }
-        .achievement-item:last-child{ border-bottom:none; }
-        .achievement-item:hover { transform: translateX(6px); }
-        .achievement-title { font-weight:640; font-size:1.02rem; margin-bottom:4px; line-height:1.4; }
-        .achievement-desc { color: var(--muted); font-size:0.92rem; }
+        .relations-item:last-child{ border-bottom:none; }
+        .relations-item:hover { transform: translateX(6px); }
+        .relations-title { font-weight:640; font-size:1.02rem; margin-bottom:4px; line-height:1.4; }
+        .relations-desc { color: var(--muted); font-size:0.92rem; }
 
         .bio-details { display:grid; grid-template-columns:1fr; gap:0; margin-top:16px; }
         .bio-item { padding: 15px 2px; border-bottom: 1px solid var(--line); }
@@ -236,7 +236,7 @@
     <header>
         <div class="profile-container">
             <div class="profile-photo" id="profilePhoto" onclick="window.location.href='https://x.com/gaxlak'">
-                <img src="Malvier.png" alt="Malvier Hartmann" onerror="this.style.backgroundColor='#ccc'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22150%22%20height%3D%22150%22%20viewBox%3D%220%200%20150%20150%22%3E%3Ccircle%20cx%3D%2275%22%20cy%3D%2275%22%20r%3D%2270%22%20fill%3D%22%23333%22%2F%3E%3Ctext%20x%3D%2275%22%20y%3D%2290%22%20font-size%3D%2240%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%3EMH%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                <img src="Malvier.jpeg" alt="Malvier Hartmann" onerror="this.style.backgroundColor='#ccc'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22150%22%20height%3D%22150%22%20viewBox%3D%220%200%20150%20150%22%3E%3Ccircle%20cx%3D%2275%22%20cy%3D%2275%22%20r%3D%2270%22%20fill%3D%22%23333%22%2F%3E%3Ctext%20x%3D%2275%22%20y%3D%2290%22%20font-size%3D%2240%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%3EMH%3C%2Ftext%3E%3C%2Fsvg%3E'">
             </div>
             <h1 class="profile-name">Malvier Hartmann</h1>
         </div>
@@ -285,58 +285,58 @@
                 <h2 class="section-title">Relations</h2>
 
                 <h3 class="gallery-section-title">Interests</h3>
-                <div class="achievement-grid">
-                    <div class="achievement-item">
-                        <div class="achievement-title">Alexa Sinclair</div>
-                        <div class="achievement-desc">An enemy but attracted to despite their hostility towards each other</div>
+                <div class="relations-grid">
+                    <div class="relations-item">
+                        <div class="relations-title">Alexa Sinclair</div>
+                        <div class="relations-desc">An enemy but attracted to despite their hostility towards each other</div>
                     </div>
-                    <div class="achievement-item">
-                        <div class="achievement-title">Evelyn</div>
-                        <div class="achievement-desc">Ex-girlfriend</div>
+                    <div class="relations-item">
+                        <div class="relations-title">Evelyn</div>
+                        <div class="relations-desc">Ex-girlfriend</div>
                     </div>
                 </div>
 
                 <h3 class="gallery-section-title">Close Friends</h3>
-                <div class="achievement-grid">
-                    <div class="achievement-item">
-                        <div class="achievement-title">Derrick</div>
-                        <div class="achievement-desc">They are extremely close and occasionally end up getting into fights with each other.</div>
+                <div class="relations-grid">
+                    <div class="relations-item">
+                        <div class="relations-title">Derrick</div>
+                        <div class="relations-desc">They are extremely close and occasionally end up getting into fights with each other.</div>
                     </div>
-                    <div class="achievement-item">
-                        <div class="achievement-title">Vasco</div>
-                        <div class="achievement-desc">Close friend and a member of the same team in C&H. They work in the same field and often operate together.</div>
+                    <div class="relations-item">
+                        <div class="relations-title">Vasco</div>
+                        <div class="relations-desc">Close friend and a member of the same team in C&H. They work in the same field and often operate together.</div>
                     </div>
                 </div>
 
                 <h3 class="gallery-section-title">Friends</h3>
-                <div class="achievement-grid">
-                    <div class="achievement-item">
-                        <div class="achievement-title">Jacob</div>
-                        <div class="achievement-desc">Also, Derrick's cousin. They share an interest in criminal affairs.</div>
+                <div class="relations-grid">
+                    <div class="relations-item">
+                        <div class="relations-title">Jacob</div>
+                        <div class="relations-desc">Also, Derrick's cousin. They share an interest in criminal affairs.</div>
                     </div>
-                    <div class="achievement-item">
-                        <div class="achievement-title">Alain</div>
-                        <div class="achievement-desc">An old friend who is not particularly close. Also Vasco's best friend.</div>
+                    <div class="relations-item">
+                        <div class="relations-title">Alain</div>
+                        <div class="relations-desc">An old friend who is not particularly close. Also Vasco's best friend.</div>
                     </div>
-                    <div class="achievement-item">
-                        <div class="achievement-title">Peter</div>
-                        <div class="achievement-desc">An old friend who has grown distant since they had a serious fight.</div>
+                    <div class="relations-item">
+                        <div class="relations-title">Peter</div>
+                        <div class="relations-desc">An old friend who has grown distant since they had a serious fight.</div>
                     </div>
-                    <div class="achievement-item">
-                        <div class="achievement-title">Emily</div>
-                        <div class="achievement-desc">Derrick's on-and-off girlfriend. Not particularly close to her and considers her more of an acquaintance.</div>
+                    <div class="relations-item">
+                        <div class="relations-title">Emily</div>
+                        <div class="relations-desc">Derrick's on-and-off girlfriend. Not particularly close to her and considers her more of an acquaintance.</div>
                     </div>
                 </div>
 
                 <h3 class="gallery-section-title">Enemy</h3>
-                <div class="achievement-grid">
-                    <div class="achievement-item">
-                        <div class="achievement-title">Jasper Coleridge</div>
-                        <div class="achievement-desc">Partner-in-Command. Works at C&H Military in Dresden and Frankfurt.</div>
+                <div class="relations-grid">
+                    <div class="relations-item">
+                        <div class="relations-title">Jasper Coleridge</div>
+                        <div class="relations-desc">Partner-in-Command. Works at C&H Military in Dresden and Frankfurt.</div>
                     </div>
-                    <div class="achievement-item">
-                        <div class="achievement-title">Becky</div>
-                        <div class="achievement-desc">Evelyn's friend</div>
+                    <div class="relations-item">
+                        <div class="relations-title">Becky</div>
+                        <div class="relations-desc">Evelyn's friend</div>
                     </div>
                 </div>
             </section>
@@ -348,11 +348,11 @@
                 <h3 class="gallery-section-title">House</h3>
                 <div class="gallery-grid">
                     <div class="house-item">
-                        <div class="house-image" style="background-image:url('house1.jpeg')"></div>
+                        <div class="house-image" style="background-image:url('House1.jpeg')"></div>
                         <div class="house-label">Stuttgart<div class="house-caption">(The Hartmann's Mansion)</div></div>
                     </div>
                     <div class="house-item">
-                        <div class="house-image" style="background-image:url('house3.jpeg')"></div>
+                        <div class="house-image" style="background-image:url('House2.jpeg')"></div>
                         <div class="house-label">Dresden<div class="house-caption">(Malvier's house)</div></div>
                     </div>
                 </div>
@@ -360,19 +360,19 @@
                 <h3 class="gallery-section-title">C&H Military Base</h3>
                 <div class="gallery-grid">
                     <div class="house-item">
-                        <div class="house-image" style="background-image:url('base1.jpeg')"></div>
+                        <div class="house-image" style="background-image:url('Base1.jpeg')"></div>
                         <div class="house-label">Dresden</div>
                     </div>
                     <div class="house-item">
-                        <div class="house-image" style="background-image:url('base2.jpeg')"></div>
+                        <div class="house-image" style="background-image:url('Base2.jpeg')"></div>
                         <div class="house-label">Frankfurt</div>
                     </div>
                     <div class="house-item">
-                        <div class="house-image" style="background-image:url('base3.jpeg')"></div>
+                        <div class="house-image" style="background-image:url('Base3.jpeg')"></div>
                         <div class="house-label">Berlin</div>
                     </div>
                     <div class="house-item">
-                        <div class="house-image" style="background-image:url('base4.jpeg')"></div>
+                        <div class="house-image" style="background-image:url('Base4.jpeg')"></div>
                         <div class="house-label">Ramstein</div>
                     </div>
                 </div>
@@ -404,7 +404,7 @@
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
             function staggerItems(section) {
-                const items = section.querySelectorAll('.achievement-item, .family-member, .trivia-item, .bio-item');
+                const items = section.querySelectorAll('.relations-item, .family-member, .trivia-item, .bio-item');
                 items.forEach((el, i) => {
                     el.classList.remove('reveal');
                     void el.offsetWidth; // restart animation
@@ -465,4 +465,4 @@
         })();
     </script>
 </body>
-                        </html>
+                            </html>
