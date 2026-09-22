@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Main Story - Gathur Delano Kafka</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{
+            --bg:#ffffff; --panel:#fbfbfa; --text:#111; --muted:#555;
+            --line:#e7e7e5; --line-strong:#111; --accent:#111;
+            box-sizing:border-box;
+            padding-top:env(safe-area-inset-top,0px);
+            padding-bottom:env(safe-area-inset-bottom,0px);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; }
+
+        html{ scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 16px;
+            -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x:hidden;
+        }
+
+        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
+        a { text-decoration: none; color: inherit; }
+
+        /* ---------- HEADER ---------- */
+        header {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 34px 24px 28px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        header::before{
+            content:"";
+            position:absolute; left:0; top:0; right:0; height:3px;
+            background: var(--line-strong);
+            transform: scaleX(0); transform-origin:left;
+            animation: drawLine 0.9s cubic-bezier(.22,1,.36,1) 0.15s forwards;
+        }
+        @keyframes drawLine{ to{ transform:scaleX(1); } }
+
+        .profile-name {
+            font-size: 2rem; font-weight: 700; line-height: 1.2; margin-bottom: 6px;
+            opacity:0; transform: translateY(8px);
+            animation: riseIn 0.6s cubic-bezier(.22,1,.36,1) 0.28s forwards;
+        }
+        @keyframes riseIn{ to{ opacity:1; transform:translateY(0); } }
+
+        .profile-sub {
+            color: var(--muted);
+            font-size: 1rem;
+            font-weight: 400;
+            opacity:0; transform: translateY(8px);
+            animation: riseIn 0.6s cubic-bezier(.22,1,.36,1) 0.35s forwards;
+        }
+
+        /* ---------- MAIN CONTAINER ---------- */
+        .main-container { display:block; }
+
+        @media (min-width: 860px) {
+            body { padding: 32px 40px; }
+            .main-container { display:flex; gap:40px; align-items:flex-start; }
+            .sidebar { width:270px; flex-shrink:0; position:sticky; top:32px; }
+            .content-area { flex:1; min-width:0; }
+            .navigation-buttons { flex-direction:column; gap:8px; }
+        }
+
+        /* ---------- NAV ---------- */
+        .navigation-buttons { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px; }
+
+        .nav-btn {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 11px 16px;
+            font-weight: 550;
+            font-size: 0.92rem;
+            text-align: center;
+            flex: 1 0 auto;
+            min-width: 108px;
+            color: var(--text);
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s ease, border-color 0.3s ease, transform 0.35s cubic-bezier(.34,1.56,.64,1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .nav-btn span{ position:relative; z-index:2; }
+        .nav-btn::before{
+            content:"";
+            position:absolute; inset:0; background: var(--line-strong);
+            transform: scaleX(0); transform-origin:left;
+            transition: transform 0.4s cubic-bezier(.22,1,.36,1);
+            z-index:1;
+        }
+        .nav-btn.active { color:#fff; border-color: var(--line-strong); transform: scale(1.02); }
+        .nav-btn.active::before{ transform: scaleX(1); }
+        .nav-btn:hover:not(.active) { border-color: var(--line-strong); transform: translateY(-2px); }
+        .nav-btn:active { transform: scale(0.95); }
+
+        .nav-btn .arrow {
+            font-size: 0.8rem;
+            transition: transform 0.25s ease;
+            position: relative;
+            z-index: 2;
+        }
+        .nav-btn.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* ---------- SUB MENU ---------- */
+        .sub-menu {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            padding-left: 16px;
+            margin-top: 4px;
+            border-left: 2px solid var(--line);
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .sub-menu.open {
+            display: flex;
+            animation: subIn 0.35s cubic-bezier(.22,1,.36,1);
+        }
+
+        @keyframes subIn {
+            0% { opacity: 0; transform: translateY(-6px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .sub-btn {
+            background: transparent;
+            border: 1px solid var(--line);
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+            border-radius: 999px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .sub-btn span{ position:relative; z-index:2; }
+
+        .sub-btn::before{
+            content:"";
+            position:absolute; inset:0; background: var(--line-strong);
+            transform: scaleX(0); transform-origin:left;
+            transition: transform 0.35s cubic-bezier(.22,1,.36,1);
+            z-index:1;
+        }
+
+        .sub-btn:hover {
+            border-color: var(--line-strong);
+            transform: translateX(4px);
+        }
+
+        .sub-btn.active {
+            background: var(--line-strong);
+            color: #fff;
+            border-color: var(--line-strong);
+            font-weight: 600;
+        }
+
+        .sub-btn.active::before {
+            transform: scaleX(1);
+        }
+
+        /* ---------- CONTENT AREA ---------- */
+        .content-area {
+            flex: 1;
+            min-width: 0;
+        }
+
+        footer {
+            text-align:center;
+            padding:28px 20px 16px;
+            border-top:1px solid var(--line);
+            margin-top:20px;
+            color:var(--muted);
+        }
+        .footer-avatar {
+            width:44px; height:44px; border-radius:50%; object-fit:cover;
+            display:block; margin:0 auto 8px; border:2px solid var(--line);
+        }
+
+        /* ---------- FULLSCREEN PDF OVERLAY ---------- */
+        .pdf-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .pdf-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .pdf-overlay-content {
+            width: 94%;
+            max-width: 1100px;
+            height: 85vh;
+            max-height: 900px;
+            background: var(--bg);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin: auto;
+        }
+
+        @keyframes slideUp {
+            0% { transform: scale(0.92) translateY(30px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .pdf-overlay-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--panel);
+            flex-shrink: 0;
+        }
+
+        .pdf-overlay-header h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 80%;
+        }
+
+        .pdf-overlay-close {
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: var(--text);
+            cursor: pointer;
+            padding: 0 8px;
+            transition: all 0.2s;
+            line-height: 1;
+        }
+
+        .pdf-overlay-close:hover {
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        .pdf-overlay-body {
+            flex: 1;
+            background: #f1f3f5;
+            padding: 20px;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .pdf-overlay-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+            background: var(--bg);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .pdf-placeholder-text {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 1.1rem;
+            background: var(--panel);
+            border-radius: 8px;
+        }
+
+        .pdf-placeholder-text i {
+            font-size: 40px;
+            margin-right: 14px;
+            color: #ccc;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width:600px){
+            header{ padding:24px 16px; }
+            .profile-name{ font-size:1.7rem; }
+            .section-title{ font-size:1.4rem; }
+            .content-section{ padding:22px 16px; }
+        }
+
+        @media (max-width: 768px) {
+            .pdf-overlay {
+                padding: 24px 16px;
+            }
+
+            .pdf-overlay-content {
+                width: 98%;
+                height: 88vh;
+                max-height: none;
+                border-radius: 20px;
+            }
+
+            .pdf-overlay-header {
+                padding: 14px 18px;
+            }
+
+            .pdf-overlay-header h3 {
+                font-size: 1rem;
+                max-width: 70%;
+            }
+
+            .pdf-overlay-close {
+                font-size: 28px;
+            }
+
+            .pdf-overlay-body {
+                padding: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pdf-overlay {
+                padding: 16px 10px;
+            }
+
+            .pdf-overlay-content {
+                width: 100%;
+                height: 92vh;
+                border-radius: 16px;
+            }
+
+            .pdf-overlay-header {
+                padding: 12px 14px;
+            }
+
+            .pdf-overlay-header h3 {
+                font-size: 0.9rem;
+                max-width: 70%;
+            }
+
+            .pdf-overlay-close {
+                font-size: 24px;
+            }
+
+            .pdf-overlay-body {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .pdf-overlay {
+                padding: 10px 6px;
+            }
+
+            .pdf-overlay-content {
+                height: 95vh;
+                border-radius: 12px;
+            }
+
+            .pdf-overlay-header {
+                padding: 10px 12px;
+            }
+
+            .pdf-overlay-header h3 {
+                font-size: 0.8rem;
+            }
+
+            .pdf-overlay-close {
+                font-size: 22px;
+            }
+
+            .pdf-overlay-body {
+                padding: 6px;
+            }
+        }
+
+        /* Landscape phone */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .pdf-overlay {
+                padding: 12px 20px;
+            }
+
+            .pdf-overlay-content {
+                height: 90vh;
+                max-height: 600px;
+                border-radius: 16px;
+            }
+
+            .pdf-overlay-header {
+                padding: 10px 16px;
+            }
+
+            .pdf-overlay-header h3 {
+                font-size: 0.9rem;
+            }
+
+            .pdf-overlay-body {
+                padding: 10px;
+            }
+        }
+
+        img{ max-width:100%; height:auto; }
+
+        @media (prefers-reduced-motion: reduce){
+            *, *::before, *::after{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="profile-name">Main Story</h1>
+        <p class="profile-sub">Kafka's Universe</p>
+    </header>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="navigation-buttons">
+                <!-- The Jackdaw -->
+                <div class="nav-btn" data-target="jackdaw">
+                    <span>The Jackdaw</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="sub-menu" id="sub-jackdaw">
+                    <button class="sub-btn" data-title="The Jackdaw - Chapter 1"><span>Chapter 1</span></button>
+                    <button class="sub-btn" data-title="The Jackdaw - Chapter 2"><span>Chapter 2</span></button>
+                    <button class="sub-btn" data-title="The Jackdaw - Chapter 3"><span>Chapter 3</span></button>
+                    <button class="sub-btn" data-title="The Jackdaw - Chapter 4"><span>Chapter 4</span></button>
+                    <button class="sub-btn" data-title="The Jackdaw - Chapter 5"><span>Chapter 5</span></button>
+                </div>
+
+                <!-- A Language of Threats -->
+                <div class="nav-btn" data-target="threats">
+                    <span>A Language of Threats</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="sub-menu" id="sub-threats">
+                    <button class="sub-btn" data-title="ALOT - Chapter 1" data-pdf="https://drive.google.com/file/d/1cVY89y0fWVxdY155LNuMTwwuSFHOA_mG/preview"><span>Chapter 1</span></button>
+                    <button class="sub-btn" data-title="ALOT - Chapter 2"><span>Chapter 2</span></button>
+                    <button class="sub-btn" data-title="ALOT - Chapter 3"><span>Chapter 3</span></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <footer>
+                <img src="Arde.png" alt="Arde" class="footer-avatar" onerror="this.style.display='none'">
+                <p style="font-size:14px; color:var(--muted);">Written by Arde</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ===== FULLSCREEN PDF OVERLAY ===== -->
+    <div class="pdf-overlay" id="pdfOverlay">
+        <div class="pdf-overlay-content">
+            <div class="pdf-overlay-header">
+                <h3 id="pdfOverlayTitle">Loading...</h3>
+                <button class="pdf-overlay-close" id="pdfOverlayClose">&times;</button>
+            </div>
+            <div class="pdf-overlay-body" id="pdfOverlayBody">
+                <div class="pdf-placeholder-text" id="pdfPlaceholder">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Loading PDF...</span>
+                </div>
+                <iframe id="pdfOverlayIframe" style="display: none;"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Dropdown toggles
+            const navBtns = document.querySelectorAll('.nav-btn');
+            const subMenus = {
+                jackdaw: document.getElementById('sub-jackdaw'),
+                threats: document.getElementById('sub-threats')
+            };
+
+            // Default: semua dropdown tertutup
+            subMenus.jackdaw.classList.remove('open');
+            subMenus.threats.classList.remove('open');
+            navBtns.forEach(btn => btn.classList.remove('open'));
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const target = this.getAttribute('data-target');
+                    const sub = subMenus[target];
+                    if (sub) {
+                        sub.classList.toggle('open');
+                        this.classList.toggle('open');
+                    }
+                });
+            });
+
+            // ===== PDF OVERLAY =====
+            const overlay = document.getElementById('pdfOverlay');
+            const overlayTitle = document.getElementById('pdfOverlayTitle');
+            const overlayIframe = document.getElementById('pdfOverlayIframe');
+            const overlayPlaceholder = document.getElementById('pdfPlaceholder');
+            const closeBtn = document.getElementById('pdfOverlayClose');
+
+            function openPdf(title, pdfUrl) {
+                overlayTitle.textContent = title;
+
+                if (pdfUrl) {
+                    overlayPlaceholder.style.display = 'none';
+                    overlayIframe.style.display = 'block';
+                    overlayIframe.src = pdfUrl;
+                } else {
+                    overlayPlaceholder.style.display = 'flex';
+                    overlayPlaceholder.innerHTML = `
+                        <i class="fas fa-book-open" style="font-size: 40px; color: #ccc; margin-right: 14px;"></i>
+                        <span>Coming Soon</span>
+                    `;
+                    overlayIframe.style.display = 'none';
+                    overlayIframe.src = '';
+                }
+
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closePdf() {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                overlayIframe.src = '';
+                overlayIframe.style.display = 'none';
+                overlayPlaceholder.style.display = 'flex';
+                overlayPlaceholder.innerHTML = `
+                    <i class="fas fa-file-pdf" style="font-size: 40px; color: #ccc; margin-right: 14px;"></i>
+                    <span>Loading PDF...</span>
+                `;
+            }
+
+            closeBtn.addEventListener('click', closePdf);
+
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    closePdf();
+                }
+            });
+
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                    closePdf();
+                }
+            });
+
+            const subBtns = document.querySelectorAll('.sub-btn');
+
+            subBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const title = this.getAttribute('data-title') || 'Chapter';
+                    const pdf = this.getAttribute('data-pdf') || null;
+
+                    openPdf(title, pdf);
+
+                    subBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        })();
+    </script>
+</body>
+  </html>
