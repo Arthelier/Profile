@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Malvier Hartmann</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{
+            --bg:#ffffff; --panel:#fbfbfa; --text:#111; --muted:#555;
+            --line:#e7e7e5; --line-strong:#111; --accent:#111;
+            box-sizing:border-box;
+            padding-top:env(safe-area-inset-top,0px);
+            padding-bottom:env(safe-area-inset-bottom,0px);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; }
+
+        html{ scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 16px;
+            -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x:hidden;
+        }
+
+        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
+        a { text-decoration: none; color: inherit; }
+
+        /* ---------- HEADER ---------- */
+        header {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 34px 24px 28px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before{
+            content:"";
+            position:absolute; left:0; top:0; right:0; height:3px;
+            background: var(--line-strong);
+            transform: scaleX(0); transform-origin:left;
+            animation: drawLine 0.9s cubic-bezier(.22,1,.36,1) 0.15s forwards;
+        }
+        @keyframes drawLine{ to{ transform:scaleX(1); } }
+
+        .profile-container { display:flex; flex-direction:column; align-items:center; text-align:center; }
+
+        .profile-photo {
+            width: 136px; height: 136px; border-radius: 50%;
+            background: #eee; border: 3px solid var(--line-strong);
+            overflow: hidden; margin-bottom: 20px; cursor: pointer;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+            opacity:0; transform: translateY(10px) scale(0.96);
+            animation: photoIn 0.7s cubic-bezier(.22,1,.36,1) 0.05s forwards;
+            transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s;
+            will-change: transform;
+        }
+        @keyframes photoIn{ to{ opacity:1; transform: translateY(0) scale(1); } }
+        .profile-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+        .profile-photo:hover { box-shadow: 0 14px 30px rgba(0,0,0,0.1); }
+
+        .profile-name {
+            font-size: 2rem; font-weight: 700; line-height: 1.2; margin-bottom: 6px;
+            opacity:0; transform: translateY(8px);
+            animation: riseIn 0.6s cubic-bezier(.22,1,.36,1) 0.28s forwards;
+        }
+        @keyframes riseIn{ to{ opacity:1; transform:translateY(0); } }
+
+        @media (min-width: 860px) {
+            body { padding: 32px 40px; }
+            .main-container { display:flex; gap:40px; align-items:flex-start; }
+            .sidebar { width:270px; flex-shrink:0; position:sticky; top:32px; }
+            .content-area { flex:1; min-width:0; }
+            .navigation-buttons { flex-direction:column; gap:8px; }
+            .nav-btn { padding:14px 18px; font-size:1rem; text-align:left; }
+        }
+
+        /* ---------- NAV ---------- */
+        .navigation-buttons { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px; }
+
+        .nav-btn {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 11px 16px;
+            font-weight: 550;
+            font-size: 0.92rem;
+            text-align: center;
+            flex: 1 0 auto;
+            min-width: 108px;
+            color: var(--text);
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s ease, border-color 0.3s ease, transform 0.35s cubic-bezier(.34,1.56,.64,1);
+        }
+        .nav-btn span{ position:relative; z-index:2; }
+        .nav-btn::before{
+            content:"";
+            position:absolute; inset:0; background: var(--line-strong);
+            transform: scaleX(0); transform-origin:left;
+            transition: transform 0.4s cubic-bezier(.22,1,.36,1);
+            z-index:1;
+        }
+        .nav-btn.active { color:#fff; border-color: var(--line-strong); transform: scale(1.02); }
+        .nav-btn.active::before{ transform: scaleX(1); }
+        .nav-btn:hover:not(.active) { border-color: var(--line-strong); transform: translateY(-2px); }
+        .nav-btn:active { transform: scale(0.95); }
+
+
+
+        /* ---------- SECTIONS ---------- */
+        .content-section {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-top: 3px solid var(--line-strong);
+            border-radius: 6px;
+            padding: 30px 26px;
+            margin-bottom: 26px;
+            display:none;
+        }
+        .content-section.active { display:block; animation: sectionIn 0.5s cubic-bezier(.22,1,.36,1); }
+        @keyframes sectionIn{
+            0%{ opacity:0; transform: translateY(14px) scale(0.99); }
+            100%{ opacity:1; transform: translateY(0) scale(1); }
+        }
+
+        .section-title {
+            font-size: 1.6rem; font-weight: 650; margin-bottom: 24px;
+            padding-bottom: 14px; border-bottom: 1px solid var(--line);
+        }
+
+        /* generic reveal-on-scroll item */
+        .reveal{
+            opacity:0; transform: translateY(14px);
+            animation: itemIn 0.55s cubic-bezier(.22,1,.36,1) forwards;
+            animation-delay: calc(var(--i, 0) * 55ms);
+        }
+        @keyframes itemIn{ to{ opacity:1; transform:translateY(0); } }
+
+        .achievement-grid { display:flex; flex-direction:column; }
+        .achievement-item {
+            padding: 16px 2px; border-bottom: 1px solid var(--line);
+            transition: transform 0.3s cubic-bezier(.22,1,.36,1), padding-left 0.3s cubic-bezier(.22,1,.36,1);
+        }
+        .achievement-item:last-child{ border-bottom:none; }
+        .achievement-item:hover { transform: translateX(6px); }
+        .achievement-title { font-weight:640; font-size:1.02rem; margin-bottom:4px; line-height:1.4; }
+        .achievement-desc { color: var(--muted); font-size:0.92rem; }
+
+        .bio-details { display:grid; grid-template-columns:1fr; gap:0; margin-top:16px; }
+        .bio-item { padding: 15px 2px; border-bottom: 1px solid var(--line); }
+        .bio-item:last-of-type{ border-bottom:none; }
+        .bio-title { font-weight:640; margin-bottom:3px; font-size:0.85rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.03em; }
+        .bio-description { color: var(--text); }
+
+        .family-grid { display:flex; flex-direction:column; }
+        .family-member {
+            padding: 14px 2px; border-bottom: 1px solid var(--line);
+            transition: transform 0.3s cubic-bezier(.22,1,.36,1);
+        }
+        .family-member:last-child{ border-bottom:none; }
+        .family-member:hover{ transform: translateX(6px); }
+        .family-member .role { font-weight:650; font-size:0.85rem; color:var(--muted); letter-spacing:0.3px; margin-bottom:3px; }
+        .family-member .name { font-weight:680; font-size:1.05rem; }
+        .family-member .note { font-size:0.83rem; color:var(--muted); margin-top:4px; }
+        .family-member .note i{ font-style:italic; }
+
+        /* ---------- GALLERY ---------- */
+        .gallery-img-full {
+            width:100%; height:auto; display:block; border-radius: 8px; border:1px solid var(--line);
+            background: var(--panel);
+            opacity:0; transform: translateY(14px) scale(0.98);
+        }
+        .gallery-img-full.in{ animation: itemIn 0.6s cubic-bezier(.22,1,.36,1) forwards; }
+
+        .house-item {
+            display:flex; flex-direction:column; align-items:center; background: var(--panel);
+            border-radius: 8px; border:1px solid var(--line); overflow:hidden;
+            transition: transform 0.3s cubic-bezier(.22,1,.36,1);
+        }
+        .house-item:hover{ transform: translateY(-4px); }
+        .house-image { width:100%; aspect-ratio:1/1; background-color:#eaeaea; background-size:cover; background-position:center; border-bottom:1px solid var(--line); }
+        .house-label { padding:11px 8px; font-weight:600; font-size:0.92rem; text-align:center; color:var(--text); width:100%; }
+        .house-caption { font-weight:400; font-size:0.8rem; color:var(--muted); margin-top:2px; }
+
+        .gallery-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+        .gallery-item.social { aspect-ratio:16/9; width:100%; grid-column:span 2; border-radius:8px; }
+
+        .gallery-section-title { font-size:1.25rem; font-weight:650; margin:26px 0 14px 0; padding-bottom:8px; border-bottom:1px solid var(--line); }
+        .gallery-section-title:first-of-type{ margin-top:0; }
+
+        .trivia-item {
+            padding: 16px 2px; border-bottom: 1px solid var(--line);
+            transition: transform 0.3s cubic-bezier(.22,1,.36,1);
+        }
+        .trivia-item:last-child{ border-bottom:none; }
+        .trivia-item:hover{ transform: translateX(6px); }
+        .trivia-question { font-weight:700; font-size:1.08rem; margin-bottom:6px; }
+        .trivia-answer { color: var(--muted); }
+
+        footer { text-align:center; padding:28px 20px 16px; border-top:1px solid var(--line); margin-top:20px; color:var(--muted); }
+        .footer-avatar { width:44px; height:44px; border-radius:50%; object-fit:cover; display:block; margin:0 auto 8px; border:2px solid var(--line); }
+
+        @media (max-width:600px){
+            header{ padding:24px 16px; }
+            .profile-name{ font-size:1.7rem; }
+            .profile-photo{ width:112px; height:112px; }
+            .section-title{ font-size:1.4rem; }
+            .content-section{ padding:22px 16px; }
+            .gallery-item.social{ grid-column:span 1; }
+            .gallery-grid{ grid-template-columns:1fr 1fr; }
+        }
+
+        img{ max-width:100%; height:auto; }
+
+        @media (prefers-reduced-motion: reduce){
+            *, *::before, *::after{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="profile-container">
+            <div class="profile-photo" id="profilePhoto" onclick="window.location.href='https://x.com/gaxlak'">
+                <img src="malvierhartmann.png" alt="Malvier Hartmann" onerror="this.style.backgroundColor='#ccc'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22150%22%20height%3D%22150%22%20viewBox%3D%220%200%20150%20150%22%3E%3Ccircle%20cx%3D%2275%22%20cy%3D%2275%22%20r%3D%2270%22%20fill%3D%22%23333%22%2F%3E%3Ctext%20x%3D%2275%22%20y%3D%2290%22%20font-size%3D%2240%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%3EMH%3C%2Ftext%3E%3C%2Fsvg%3E'">
+            </div>
+            <h1 class="profile-name">Malvier Hartmann</h1>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="navigation-buttons">
+                <a href="#" class="nav-btn active" data-target="profile"><span>Profile</span></a>
+                <a href="#" class="nav-btn" data-target="family"><span>Family</span></a>
+                <a href="#" class="nav-btn" data-target="relations"><span>Relations</span></a>
+                <a href="#" class="nav-btn" data-target="gallery"><span>Gallery</span></a>
+                <a href="#" class="nav-btn" data-target="storyline"><span>Storyline</span></a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <!-- PROFILE -->
+            <section id="profile" class="content-section active">
+                <h2 class="section-title">About me</h2>
+                <div class="bio-details">
+                    <div class="bio-item"><div class="bio-title">Full Name</div><div class="bio-description">Malvier Hartmann</div></div>
+                    <div class="bio-item"><div class="bio-title">Surname / Family Name</div><div class="bio-description">Hartmann</div></div>
+                    <div class="bio-item"><div class="bio-title">Date of Birth</div><div class="bio-description">October 31, 1996</div></div>
+                    <div class="bio-item"><div class="bio-title">Place of Birth</div><div class="bio-description">Stuttgart, Germany</div></div>
+                    <div class="bio-item"><div class="bio-title">Address</div><div class="bio-description">Garnisonstraße 18, 01099 Dresden, Germany</div></div>
+                    <div class="bio-item"><div class="bio-title">Blood Type</div><div class="bio-description">A+</div></div>
+                    <div class="bio-item"><div class="bio-title">MBTI</div><div class="bio-description">ENTJ</div></div>
+                    <div class="bio-item"><div class="bio-title">Profession</div><div class="bio-description">Commander of The Special Forces Operations in Coleridge & Hartmann (C&H) Military</div></div>
+                </div>
+            </section>
+
+            <!-- FAMILY -->
+            <section id="family" class="content-section">
+                <h2 class="section-title">The Hartmann Family</h2>
+                <div class="family-grid">
+                    <div class="family-member"><span class="role">Father</span><div class="name">Otto Hartmann</div></div>
+                    <div class="family-member"><span class="role">Mother</span><div class="name">Frieda Hartmann</div></div>
+                    <div class="family-member"><span class="role">Elder Brother</span><div class="name">Mavin Hartmann</div></div>
+                    <div class="family-member"><div class="name">Malvier Hartmann</div></div>
+                </div>
+            </section>
+
+            <!-- RELATIONS -->
+            <section id="relations" class="content-section">
+                <h2 class="section-title">Relations</h2>
+
+                <h3 class="gallery-section-title">Interests</h3>
+                <div class="achievement-grid">
+                    <div class="achievement-item">
+                        <div class="achievement-title">Alexa Sinclair</div>
+                        <div class="achievement-desc">An enemy but attracted to despite their hostility towards each other</div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-title">Evelyn</div>
+                        <div class="achievement-desc">Ex-girlfriend</div>
+                    </div>
+                </div>
+
+                <h3 class="gallery-section-title">Close Friends</h3>
+                <div class="achievement-grid">
+                    <div class="achievement-item">
+                        <div class="achievement-title">Derrick</div>
+                        <div class="achievement-desc">They are extremely close and occasionally end up getting into fights with each other.</div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-title">Vasco</div>
+                        <div class="achievement-desc">Close friend and a member of the same team in C&H. They work in the same field and often operate together.</div>
+                    </div>
+                </div>
+
+                <h3 class="gallery-section-title">Friends</h3>
+                <div class="achievement-grid">
+                    <div class="achievement-item">
+                        <div class="achievement-title">Jacob</div>
+                        <div class="achievement-desc">Also, Derrick's cousin. They share an interest in criminal affairs.</div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-title">Alain</div>
+                        <div class="achievement-desc">An old friend who is not particularly close. Also Vasco's best friend.</div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-title">Peter</div>
+                        <div class="achievement-desc">An old friend who has grown distant since they had a serious fight.</div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-title">Emily</div>
+                        <div class="achievement-desc">Derrick's on-and-off girlfriend. Not particularly close to her and considers her more of an acquaintance.</div>
+                    </div>
+                </div>
+
+                <h3 class="gallery-section-title">Enemy</h3>
+                <div class="achievement-grid">
+                    <div class="achievement-item">
+                        <div class="achievement-title">Jasper Coleridge</div>
+                        <div class="achievement-desc">Partner-in-Command. Works at C&H Military in Dresden and Frankfurt.</div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-title">Becky</div>
+                        <div class="achievement-desc">Evelyn's friend</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- GALLERY -->
+            <section id="gallery" class="content-section">
+                <h2 class="section-title">Gallery</h2>
+
+                <h3 class="gallery-section-title">House</h3>
+                <div class="gallery-grid">
+                    <div class="house-item">
+                        <div class="house-image" style="background-image:url('house1.jpeg')"></div>
+                        <div class="house-label">Stuttgart<div class="house-caption">(The Hartmann's Mansion)</div></div>
+                    </div>
+                    <div class="house-item">
+                        <div class="house-image" style="background-image:url('house3.jpeg')"></div>
+                        <div class="house-label">Dresden<div class="house-caption">(Malvier's house)</div></div>
+                    </div>
+                </div>
+
+                <h3 class="gallery-section-title">C&H Military Base</h3>
+                <div class="gallery-grid">
+                    <div class="house-item">
+                        <div class="house-image" style="background-image:url('base1.jpeg')"></div>
+                        <div class="house-label">Dresden</div>
+                    </div>
+                    <div class="house-item">
+                        <div class="house-image" style="background-image:url('base2.jpeg')"></div>
+                        <div class="house-label">Frankfurt</div>
+                    </div>
+                    <div class="house-item">
+                        <div class="house-image" style="background-image:url('base3.jpeg')"></div>
+                        <div class="house-label">Berlin</div>
+                    </div>
+                    <div class="house-item">
+                        <div class="house-image" style="background-image:url('base4.jpeg')"></div>
+                        <div class="house-label">Ramstein</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STORYLINE -->
+            <section id="storyline" class="content-section">
+                <h2 class="section-title">Storyline</h2>
+                <div style="text-align:center; padding:40px 20px;">
+                    <p style="font-size:1.1rem; color:var(--muted);">Redirecting to Storyline...</p>
+                    <p style="margin-top:10px;"><a href="https://arthelier.github.io/Profile/Malvier/Storyline.html" style="color:var(--text); font-weight:600; border-bottom:2px solid var(--text); padding-bottom:4px;">Click here if not redirected</a></p>
+                </div>
+            </section>
+
+            <footer>
+                <a href="https://arthelier.github.io/Profile/" style="display:inline-block; text-decoration:none;">
+                    <img src="Arde.png" alt="Arde" class="footer-avatar" style="box-shadow:none; border:2px solid var(--line); cursor:pointer;">
+                </a>
+                <p style="font-size:14px; color:var(--muted);">Written by Arde</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const navBtns = document.querySelectorAll('.nav-btn:not(.alterspring-nav)');
+            const sections = document.querySelectorAll('.content-section');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            function staggerItems(section) {
+                const items = section.querySelectorAll('.achievement-item, .family-member, .trivia-item, .bio-item');
+                items.forEach((el, i) => {
+                    el.classList.remove('reveal');
+                    void el.offsetWidth; // restart animation
+                    el.style.setProperty('--i', i);
+                    el.classList.add('reveal');
+                });
+            }
+
+            function activateSection(targetId) {
+                if (targetId === 'storyline') {
+                    window.location.href = 'https://arthelier.github.io/Profile/Malvier/Storyline.html';
+                    return;
+                }
+
+                sections.forEach(sec => sec.classList.remove('active'));
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.classList.add('active');
+                    if (!reduceMotion) staggerItems(target);
+                }
+
+                navBtns.forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.querySelector(`.nav-btn[data-target="${targetId}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('data-target');
+                    if (target) activateSection(target);
+                    if (window.innerWidth < 860 && target !== 'storyline') {
+                        setTimeout(() => {
+                            document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 120);
+                    }
+                });
+            });
+
+            activateSection('profile');
+
+            // profil di pc
+            const photo = document.getElementById('profilePhoto');
+            if (photo && window.matchMedia('(pointer: fine)').matches && !reduceMotion) {
+                photo.addEventListener('mousemove', (e) => {
+                    const r = photo.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+                    photo.style.transform = `scale(1.03) rotateX(${-y * 10}deg) rotateY(${x * 10}deg)`;
+                });
+                photo.addEventListener('mouseleave', () => { photo.style.transform = ''; });
+            }
+
+            document.querySelectorAll('.nav-btn, .voice-link, .music-link').forEach(el => {
+                el.addEventListener('touchstart', function() { this.style.transform = 'scale(0.96)'; });
+                el.addEventListener('touchend', function() { this.style.transform = ''; });
+            });
+        })();
+    </script>
+</body>
+  </html>
