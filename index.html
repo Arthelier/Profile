@@ -40,9 +40,10 @@
             padding: 24px 0 12px;
             position: relative;
             z-index: 100;
+            gap: 12px;
         }
 
-        /* Teks "Arde : Ghost Writer" di kiri */
+        /* Teks kiri "Arde : Ghost Writer" */
         .writer-label {
             font-size: 0.9rem;
             font-weight: 600;
@@ -65,110 +66,36 @@
             font-weight: 500;
         }
 
-        .icon-btn {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: transparent;
-            border: 1px solid var(--line);
-            color: var(--text);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.25s cubic-bezier(.34,1.56,.64,1);
-            -webkit-tap-highlight-color: transparent;
-            padding: 0;
-            flex-shrink: 0;
-        }
-
-        .icon-btn:hover {
-            border-color: var(--line-strong);
-            background: var(--text);
-            color: #fff;
-            transform: translateY(-2px);
-        }
-
-        .icon-btn:active { transform: scale(0.92); }
-
-        .icon-btn i {
-            font-size: 1rem;
-            pointer-events: none;
-        }
-
-        .burger-lines {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            width: 18px;
-            pointer-events: none;
-        }
-
-        .burger-lines span {
-            display: block;
-            height: 2px;
-            background: currentColor;
-            border-radius: 2px;
-            transition: all 0.3s cubic-bezier(.22,1,.36,1);
-        }
-
-        .icon-btn.menu-open .burger-lines span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
-        .icon-btn.menu-open .burger-lines span:nth-child(2) {
-            opacity: 0;
-        }
-        .icon-btn.menu-open .burger-lines span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-        }
-
-        .main-menu {
-            position: absolute;
-            top: 68px;
-            right: 0;
-            background: var(--bg);
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            padding: 8px;
-            min-width: 190px;
-            box-shadow: 0 18px 40px rgba(0,0,0,0.12);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-8px) scale(0.97);
-            transform-origin: top right;
-            transition: all 0.25s cubic-bezier(.22,1,.36,1);
-            z-index: 200;
-        }
-
-        .main-menu.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
-        }
-
-        .main-menu a {
-            display: block;
-            padding: 10px 14px;
-            border-radius: 8px;
+        /* Teks kanan "Previous : G" */
+        .previous-label {
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: -0.01em;
             color: var(--text);
-            transition: all 0.18s ease;
             white-space: nowrap;
+            opacity: 0;
+            transform: translateY(6px);
+            animation: riseIn 0.5s cubic-bezier(.22,1,.36,1) 0.1s forwards;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
         }
 
-        .main-menu a:hover {
-            background: #f4f4f2;
-            padding-left: 18px;
+        .previous-label:hover {
+            opacity: 0.7;
         }
 
-        .main-menu a:active { background: #ebebe9; }
-
-        .main-menu .menu-sep {
-            height: 1px;
-            background: var(--line);
-            margin: 6px 8px;
+        .previous-label .sep {
+            color: var(--muted);
+            margin: 0 4px;
+            font-weight: 400;
         }
+
+        .previous-label .g {
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        @keyframes riseIn{ to{ opacity:1; transform:translateY(0); } }
 
         /* ========================================================= */
         /* ============== HEADER =================================== */
@@ -179,7 +106,7 @@
             margin-bottom: 40px;
             border-bottom: 1px solid var(--line);
             opacity:0; transform: translateY(8px);
-            animation: riseIn 0.6s cubic-bezier(.22,1,.36,1) 0.05s forwards;
+            animation: riseIn 0.6s cubic-bezier(.22,1,.36,1) 0.15s forwards;
         }
 
         .header-avatar {
@@ -191,7 +118,7 @@
             margin: 0 auto 20px;
             opacity: 0;
             transform: translateY(10px) scale(0.95);
-            animation: avatarIn 0.7s cubic-bezier(.22,1,.36,1) 0.2s forwards;
+            animation: avatarIn 0.7s cubic-bezier(.22,1,.36,1) 0.25s forwards;
             transition: transform 0.4s cubic-bezier(.22,1,.36,1), box-shadow 0.4s;
             will-change: transform;
         }
@@ -219,15 +146,13 @@
             font-weight: 400;
         }
 
-        @keyframes riseIn{ to{ opacity:1; transform:translateY(0); } }
-
         /* ========================================================= */
         /* ============== BIO SECTION ============================== */
         /* ========================================================= */
         .bio-section {
             margin-bottom: 40px;
             opacity:0; transform: translateY(8px);
-            animation: riseIn 0.6s cubic-bezier(.22,1,.36,1) 0.2s forwards;
+            animation: riseIn 0.6s cubic-bezier(.22,1,.36,1) 0.3s forwards;
         }
 
         .bio-text {
@@ -256,6 +181,8 @@
             max-width: 420px;
             margin: 0 auto 32px;
             width: 100%;
+            opacity:0; transform: translateY(8px);
+            animation: riseIn 0.6s cubic-bezier(.22,1,.36,1) 0.4s forwards;
         }
 
         .char-btn {
@@ -301,27 +228,16 @@
             z-index: 1;
         }
 
-        .char-btn:hover {
-            border-color: var(--line-strong);
-        }
-
-        .char-btn:hover::before {
-            transform: scaleX(1);
-        }
-
-        .char-btn:hover span {
-            color: #fff;
-        }
-
+        .char-btn:hover { border-color: var(--line-strong); }
+        .char-btn:hover::before { transform: scaleX(1); }
+        .char-btn:hover span { color: #fff; }
         .char-btn:hover .char-arrow {
             transform: translateX(4px);
             color: #fff;
             opacity: 1;
         }
 
-        .char-btn:active {
-            transform: scale(0.97);
-        }
+        .char-btn:active { transform: scale(0.97); }
 
         /* ========================================================= */
         /* ============== FOOTER =================================== */
@@ -342,8 +258,9 @@
         /* ===== RESPONSIVE ===== */
         @media (max-width: 600px) {
             body { padding: 0 18px 40px; }
-            .top-bar { padding: 18px 0 8px; }
+            .top-bar { padding: 18px 0 8px; gap: 8px; }
             .writer-label { font-size: 0.82rem; }
+            .previous-label { font-size: 0.82rem; }
             .header-avatar { width: 82px; height: 82px; margin-bottom: 16px; }
             .profile-name { font-size: 1.75rem; }
             header { padding: 32px 0 28px; margin-bottom: 32px; }
@@ -353,9 +270,8 @@
 
         @media (max-width: 420px) {
             body { padding: 0 16px 32px; }
-            .icon-btn { width: 38px; height: 38px; }
-            .main-menu { min-width: 170px; }
-            .writer-label { font-size: 0.78rem; }
+            .writer-label { font-size: 0.75rem; }
+            .previous-label { font-size: 0.75rem; }
             .header-avatar { width: 72px; height: 72px; }
             .bio-text { font-size: 0.85rem; }
             .char-btn { padding: 13px 16px; font-size: 0.85rem; }
@@ -371,30 +287,12 @@
 <body>
     <!-- ===== TOP BAR ===== -->
     <div class="top-bar">
-        <!-- Teks pengganti tombol back -->
         <div class="writer-label">
             Arde <span class="sep">:</span> <span class="ghost">Ghost Writer</span>
         </div>
 
-        <div style="position:relative;">
-            <button class="icon-btn" id="menuBtn" aria-label="Menu">
-                <div class="burger-lines">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </button>
-
-            <!-- Dropdown Menu -->
-            <div class="main-menu" id="mainMenu">
-                <a href="index.html">
-                    <i class="fas fa-circle-info" style="font-size:0.75rem; margin-right:8px; opacity:0.6;"></i>About
-                </a>
-                <div class="menu-sep"></div>
-                <a href="https://arthelier.github.io/Profile/index.html" target="_blank" rel="noopener">
-                    <i class="fas fa-globe" style="font-size:0.75rem; margin-right:8px; opacity:0.6;"></i>Other
-                </a>
-            </div>
+        <div class="previous-label" onclick="window.location.href='https://arthelier.github.io/Profile/Gathur'">
+            Previous <span class="sep">:</span> <span class="g">G</span>
         </div>
     </div>
 
@@ -409,7 +307,7 @@
     <div class="bio-section">
         <div class="bio-text">
             <p>A writer who enjoys writing in the thriller, dark, and psychological thriller genres. Someone who also loves coding and building websites. Only started writing at the end of 2025, so the craft of writing still needs a lot of developing.</p>
-            <p>Began by writing the character Gathur Delano Kafka with a neo-noir and time-lapse genre (but ended up going around in circles with the politics and thriller), then wrote the character Malvier Hartmann as a way to vent his criminal mind and his black-flag side. Then continued creating several other characters (still not perfect).</p>
+            <p>Began by writing the character Gathur Delano Kafka with a neo-noir and <strong>time-loop</strong> genre (but ended up going around in circles with the politics and thriller), then wrote the character Malvier Hartmann as a way to vent his criminal mind and his black-flag side. Then continued creating several other characters (still not perfect).</p>
         </div>
     </div>
 
@@ -433,32 +331,5 @@
     <footer>
         <p class="copyright">&copy; Arde</p>
     </footer>
-
-    <script>
-        (function() {
-            const menuBtn = document.getElementById('menuBtn');
-            const mainMenu = document.getElementById('mainMenu');
-
-            menuBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                mainMenu.classList.toggle('open');
-                menuBtn.classList.toggle('menu-open');
-            });
-
-            document.addEventListener('click', function(e) {
-                if (!mainMenu.contains(e.target) && !menuBtn.contains(e.target)) {
-                    mainMenu.classList.remove('open');
-                    menuBtn.classList.remove('menu-open');
-                }
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    mainMenu.classList.remove('open');
-                    menuBtn.classList.remove('menu-open');
-                }
-            });
-        })();
-    </script>
 </body>
     </html>
