@@ -194,6 +194,29 @@
             transform: scaleX(1);
         }
 
+        /* ---------- POSTER ---------- */
+        .poster-wrap {
+            width: 100%;
+            margin-bottom: 14px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: var(--panel);
+            opacity:0; transform: translateY(8px);
+            animation: riseIn 0.5s cubic-bezier(.22,1,.36,1) forwards;
+        }
+
+        .poster-wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s cubic-bezier(.22,1,.36,1);
+        }
+
+        .poster-wrap:hover img {
+            transform: scale(1.03);
+        }
+
         /* ---------- CONTENT AREA ---------- */
         .content-area {
             flex: 1;
@@ -212,7 +235,9 @@
             display:block; margin:0 auto 8px; border:2px solid var(--line);
         }
 
-        /* ---------- FULLSCREEN PDF OVERLAY ---------- */
+        /* ========================================================= */
+        /* ============== FULLSCREEN PDF OVERLAY =================== */
+        /* ========================================================= */
         .pdf-overlay {
             position: fixed;
             top: 0;
@@ -224,7 +249,8 @@
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 40px 30px;
+            /* ===== perbaikan: kasih ruang bawah lebih lega ===== */
+            padding: 40px 30px 70px;
             backdrop-filter: blur(4px);
             animation: fadeIn 0.3s ease;
         }
@@ -241,8 +267,9 @@
         .pdf-overlay-content {
             width: 94%;
             max-width: 1100px;
-            height: 85vh;
-            max-height: 900px;
+            /* ===== perbaikan: kurangi tinggi agar tidak mepet bawah ===== */
+            height: 80vh;
+            max-height: 820px;
             background: var(--bg);
             border-radius: 14px;
             overflow: hidden;
@@ -267,6 +294,7 @@
             align-items: center;
             background: var(--panel);
             flex-shrink: 0;
+            gap: 12px;
         }
 
         .pdf-overlay-header h3 {
@@ -276,7 +304,9 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 80%;
+            max-width: 100%;
+            flex: 1;
+            min-width: 0;
         }
 
         .pdf-overlay-close {
@@ -288,6 +318,7 @@
             padding: 0 8px;
             transition: all 0.2s;
             line-height: 1;
+            flex-shrink: 0;
         }
 
         .pdf-overlay-close:hover {
@@ -301,6 +332,7 @@
             padding: 20px;
             overflow: hidden;
             min-height: 0;
+            position: relative;
         }
 
         .pdf-overlay-body iframe {
@@ -330,22 +362,74 @@
             color: #ccc;
         }
 
+        /* ===== SLIDE PAGE NAVIGATION ===== */
+        .pdf-overlay-footer {
+            padding: 14px 24px;
+            border-top: 1px solid var(--line);
+            background: var(--panel);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .slide-nav-btn {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            color: var(--text);
+            padding: 9px 20px;
+            border-radius: 999px;
+            font-weight: 550;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(.34,1.56,.64,1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 100px;
+            justify-content: center;
+        }
+
+        .slide-nav-btn:hover:not(:disabled) {
+            background: var(--line-strong);
+            color: #fff;
+            border-color: var(--line-strong);
+            transform: translateY(-2px);
+        }
+
+        .slide-nav-btn:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .slide-nav-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .slide-indicator {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 550;
+            white-space: nowrap;
+            text-align: center;
+            flex: 1;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width:600px){
             header{ padding:24px 16px; }
             .profile-name{ font-size:1.7rem; }
-            .section-title{ font-size:1.4rem; }
-            .content-section{ padding:22px 16px; }
         }
 
         @media (max-width: 768px) {
             .pdf-overlay {
-                padding: 24px 16px;
+                padding: 24px 16px 50px;
             }
 
             .pdf-overlay-content {
                 width: 98%;
-                height: 88vh;
+                height: 82vh;
                 max-height: none;
                 border-radius: 20px;
             }
@@ -356,7 +440,6 @@
 
             .pdf-overlay-header h3 {
                 font-size: 1rem;
-                max-width: 70%;
             }
 
             .pdf-overlay-close {
@@ -366,16 +449,34 @@
             .pdf-overlay-body {
                 padding: 14px;
             }
+
+            .pdf-overlay-footer {
+                padding: 12px 16px;
+            }
+
+            .slide-nav-btn {
+                padding: 8px 14px;
+                font-size: 0.82rem;
+                min-width: 80px;
+            }
+
+            .slide-nav-btn .btn-text {
+                display: none;
+            }
+
+            .slide-indicator {
+                font-size: 0.8rem;
+            }
         }
 
         @media (max-width: 480px) {
             .pdf-overlay {
-                padding: 16px 10px;
+                padding: 16px 10px 40px;
             }
 
             .pdf-overlay-content {
                 width: 100%;
-                height: 92vh;
+                height: 85vh;
                 border-radius: 16px;
             }
 
@@ -385,7 +486,6 @@
 
             .pdf-overlay-header h3 {
                 font-size: 0.9rem;
-                max-width: 70%;
             }
 
             .pdf-overlay-close {
@@ -395,15 +495,24 @@
             .pdf-overlay-body {
                 padding: 10px;
             }
+
+            .pdf-overlay-footer {
+                padding: 10px 12px;
+            }
+
+            .slide-nav-btn {
+                padding: 7px 12px;
+                min-width: 60px;
+            }
         }
 
         @media (max-width: 380px) {
             .pdf-overlay {
-                padding: 10px 6px;
+                padding: 10px 6px 30px;
             }
 
             .pdf-overlay-content {
-                height: 95vh;
+                height: 88vh;
                 border-radius: 12px;
             }
 
@@ -422,16 +531,24 @@
             .pdf-overlay-body {
                 padding: 6px;
             }
+
+            .pdf-overlay-footer {
+                padding: 8px 10px;
+            }
+
+            .slide-indicator {
+                font-size: 0.72rem;
+            }
         }
 
         /* Landscape phone */
         @media (max-height: 500px) and (orientation: landscape) {
             .pdf-overlay {
-                padding: 12px 20px;
+                padding: 12px 20px 20px;
             }
 
             .pdf-overlay-content {
-                height: 90vh;
+                height: 88vh;
                 max-height: 600px;
                 border-radius: 16px;
             }
@@ -446,6 +563,10 @@
 
             .pdf-overlay-body {
                 padding: 10px;
+            }
+
+            .pdf-overlay-footer {
+                padding: 8px 14px;
             }
         }
 
@@ -471,6 +592,9 @@
                     <span class="arrow"><i class="fas fa-chevron-down"></i></span>
                 </div>
                 <div class="sub-menu" id="sub-jackdaw">
+                    <div class="poster-wrap">
+                        <img src="TheJackdaw.png" alt="The Jackdaw Poster" onerror="this.parentElement.style.display='none'">
+                    </div>
                     <button class="sub-btn" data-title="The Jackdaw - Chapter 1"><span>Chapter 1</span></button>
                     <button class="sub-btn" data-title="The Jackdaw - Chapter 2"><span>Chapter 2</span></button>
                     <button class="sub-btn" data-title="The Jackdaw - Chapter 3"><span>Chapter 3</span></button>
@@ -484,6 +608,9 @@
                     <span class="arrow"><i class="fas fa-chevron-down"></i></span>
                 </div>
                 <div class="sub-menu" id="sub-threats">
+                    <div class="poster-wrap">
+                        <img src="ALOT.png" alt="A Language of Threats Poster" onerror="this.parentElement.style.display='none'">
+                    </div>
                     <button class="sub-btn" data-title="ALOT - Chapter 1" data-pdf="https://drive.google.com/file/d/1cVY89y0fWVxdY155LNuMTwwuSFHOA_mG/preview"><span>Chapter 1</span></button>
                     <button class="sub-btn" data-title="ALOT - Chapter 2"><span>Chapter 2</span></button>
                     <button class="sub-btn" data-title="ALOT - Chapter 3"><span>Chapter 3</span></button>
@@ -513,6 +640,18 @@
                 </div>
                 <iframe id="pdfOverlayIframe" style="display: none;"></iframe>
             </div>
+            <!-- ===== SLIDE PAGE NAV ===== -->
+            <div class="pdf-overlay-footer" id="pdfOverlayFooter">
+                <button class="slide-nav-btn" id="prevSlide" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                    <span class="btn-text">Prev</span>
+                </button>
+                <span class="slide-indicator" id="slideIndicator">Chapter 1 / 3</span>
+                <button class="slide-nav-btn" id="nextSlide">
+                    <span class="btn-text">Next</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -525,7 +664,6 @@
                 threats: document.getElementById('sub-threats')
             };
 
-            // Default: semua dropdown tertutup
             subMenus.jackdaw.classList.remove('open');
             subMenus.threats.classList.remove('open');
             navBtns.forEach(btn => btn.classList.remove('open'));
@@ -548,14 +686,45 @@
             const overlayIframe = document.getElementById('pdfOverlayIframe');
             const overlayPlaceholder = document.getElementById('pdfPlaceholder');
             const closeBtn = document.getElementById('pdfOverlayClose');
+            const prevBtn = document.getElementById('prevSlide');
+            const nextBtn = document.getElementById('nextSlide');
+            const slideIndicator = document.getElementById('slideIndicator');
 
-            function openPdf(title, pdfUrl) {
+            // State untuk slide navigation
+            let currentGroup = [];
+            let currentIndex = 0;
+            let currentGroupName = '';
+
+            function getChaptersByGroup(groupName) {
+                // Ambil semua sub-btn dalam grup tertentu
+                const menu = subMenus[groupName];
+                if (!menu) return [];
+                return Array.from(menu.querySelectorAll('.sub-btn'));
+            }
+
+            function updateSlideNav() {
+                if (currentGroup.length === 0) {
+                    slideIndicator.textContent = '-';
+                    prevBtn.disabled = true;
+                    nextBtn.disabled = true;
+                    return;
+                }
+
+                slideIndicator.textContent = `Chapter ${currentIndex + 1} / ${currentGroup.length}`;
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex === currentGroup.length - 1;
+            }
+
+            function openPdfFromButton(btn, groupName) {
+                const title = btn.getAttribute('data-title') || 'Chapter';
+                const pdf = btn.getAttribute('data-pdf') || null;
+
                 overlayTitle.textContent = title;
 
-                if (pdfUrl) {
+                if (pdf) {
                     overlayPlaceholder.style.display = 'none';
                     overlayIframe.style.display = 'block';
-                    overlayIframe.src = pdfUrl;
+                    overlayIframe.src = pdf;
                 } else {
                     overlayPlaceholder.style.display = 'flex';
                     overlayPlaceholder.innerHTML = `
@@ -566,6 +735,23 @@
                     overlayIframe.src = '';
                 }
 
+                // Set grup & index untuk slide navigation
+                if (groupName) {
+                    currentGroup = getChaptersByGroup(groupName);
+                    currentGroupName = groupName;
+                    currentIndex = currentGroup.indexOf(btn);
+                    if (currentIndex < 0) currentIndex = 0;
+                } else {
+                    // fallback: kalau tidak ada grup, disable nav
+                    currentGroup = [];
+                    currentIndex = 0;
+                }
+
+                // highlight sub-btn aktif
+                document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                updateSlideNav();
                 overlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
@@ -582,6 +768,23 @@
                 `;
             }
 
+            function goPrev() {
+                if (currentIndex > 0) {
+                    const prevBtnEl = currentGroup[currentIndex - 1];
+                    openPdfFromButton(prevBtnEl, currentGroupName);
+                }
+            }
+
+            function goNext() {
+                if (currentIndex < currentGroup.length - 1) {
+                    const nextBtnEl = currentGroup[currentIndex + 1];
+                    openPdfFromButton(nextBtnEl, currentGroupName);
+                }
+            }
+
+            prevBtn.addEventListener('click', goPrev);
+            nextBtn.addEventListener('click', goNext);
+
             closeBtn.addEventListener('click', closePdf);
 
             overlay.addEventListener('click', function(e) {
@@ -591,26 +794,27 @@
             });
 
             window.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && overlay.classList.contains('active')) {
-                    closePdf();
-                }
+                if (!overlay.classList.contains('active')) return;
+                if (e.key === 'Escape') closePdf();
+                if (e.key === 'ArrowLeft') goPrev();
+                if (e.key === 'ArrowRight') goNext();
             });
 
-            const subBtns = document.querySelectorAll('.sub-btn');
-
-            subBtns.forEach(btn => {
+            // Attach click handler ke semua sub-btn
+            // Deteksi grup berdasarkan parent .sub-menu
+            document.querySelectorAll('.sub-btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    const title = this.getAttribute('data-title') || 'Chapter';
-                    const pdf = this.getAttribute('data-pdf') || null;
-
-                    openPdf(title, pdf);
-
-                    subBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
+                    const parentMenu = this.closest('.sub-menu');
+                    let groupName = null;
+                    if (parentMenu) {
+                        if (parentMenu.id === 'sub-jackdaw') groupName = 'jackdaw';
+                        else if (parentMenu.id === 'sub-threats') groupName = 'threats';
+                    }
+                    openPdfFromButton(this, groupName);
                 });
             });
         })();
     </script>
 </body>
-  </html>
+                            </html>
