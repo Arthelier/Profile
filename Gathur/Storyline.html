@@ -31,9 +31,6 @@
         h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
         a { text-decoration: none; color: inherit; }
 
-        /* ========================================================= */
-        /* ============== TOP BAR (back + burger) ================== */
-        /* ========================================================= */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -76,7 +73,6 @@
             pointer-events: none;
         }
 
-        /* Burger icon — 3 garis (bukan font-awesome) */
         .burger-lines {
             display: flex;
             flex-direction: column;
@@ -103,7 +99,6 @@
             transform: translateY(-7px) rotate(-45deg);
         }
 
-        /* Menu dropdown */
         .main-menu {
             position: absolute;
             top: 68px;
@@ -154,9 +149,6 @@
             margin: 6px 8px;
         }
 
-        /* ========================================================= */
-        /* ============== HEADER =================================== */
-        /* ========================================================= */
         header {
             text-align: center;
             padding: 40px 0 36px;
@@ -182,7 +174,6 @@
 
         @keyframes riseIn{ to{ opacity:1; transform:translateY(0); } }
 
-        /* ---------- INFO TEXT ---------- */
         .info-text {
             margin-bottom: 44px;
             font-size: 0.92rem;
@@ -213,7 +204,6 @@
             color: var(--text);
         }
 
-        /* ---------- STORIES GRID ---------- */
         .stories-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -287,7 +277,6 @@
             backdrop-filter: blur(6px);
         }
 
-        /* ---------- CHAPTERS MODAL ---------- */
         .chapters-overlay {
             position: fixed;
             inset: 0;
@@ -389,7 +378,6 @@
             font-weight: 650;
         }
 
-        /* ---------- FOOTER ---------- */
         footer {
             text-align: center;
             padding-top: 32px;
@@ -403,9 +391,6 @@
             opacity: 0.9;
         }
 
-        /* ========================================================= */
-        /* ============== PDF OVERLAY ============================== */
-        /* ========================================================= */
         .pdf-overlay {
             position: fixed;
             inset: 0;
@@ -694,7 +679,6 @@
     </style>
 </head>
 <body>
-    <!-- ===== TOP BAR ===== -->
     <div class="top-bar">
         <button class="icon-btn" id="backBtn" aria-label="Back">
             <i class="fas fa-arrow-left"></i>
@@ -709,7 +693,6 @@
                 </div>
             </button>
 
-            <!-- Dropdown Menu -->
             <div class="main-menu" id="mainMenu">
                 <a href="index.html">
                     <i class="fas fa-circle-info" style="font-size:0.75rem; margin-right:8px; opacity:0.6;"></i>About
@@ -727,7 +710,6 @@
         <p class="profile-sub">Kafka's Universe</p>
     </header>
 
-    <!-- Deskripsi polos -->
     <div class="info-text">
         <div class="label">Main Character</div>
         <div class="content"><span class="main-char">Gathur Delano Kafka</span></div>
@@ -739,7 +721,6 @@
         <div class="content">Violence, Shooting, Blood, Gun Violence, Manipulation, Mental Pressure, Trauma, Self-Harm, Harm to Others, Murder, Physical Torture, Mental Torture</div>
     </div>
 
-    <!-- Poster -->
     <div class="stories-grid">
         <div class="story-card" data-story="jackdaw">
             <div class="card-image">
@@ -780,7 +761,6 @@
         <p style="font-size:0.78rem; color:var(--muted);">Written by Arde</p>
     </footer>
 
-    <!-- PDF OVERLAY -->
     <div class="pdf-overlay" id="pdfOverlay">
         <div class="pdf-overlay-content">
             <div class="pdf-overlay-header">
@@ -813,7 +793,6 @@
 
     <script>
         (function() {
-            // ===== TOP BAR FUNCTIONALITY =====
             const backBtn = document.getElementById('backBtn');
             const menuBtn = document.getElementById('menuBtn');
             const mainMenu = document.getElementById('mainMenu');
@@ -849,11 +828,11 @@
                 jackdaw: {
                     title: 'The Jackdaw',
                     chapters: [
-                        { title: 'Chapter 1', pdf: 'Jackdaw1.pdf', status: 'Read now' },
-                        { title: 'Chapter 2', pdf: 'Jackdaw2.pdf', status: 'On Revision' },
-                        { title: 'Chapter 3', pdf: 'Jackdaw3.pdf', status: 'On Revision' },
-                        { title: 'Chapter 4', pdf: 'Jackdaw4.pdf', status: 'On Revision' },
-                        { title: 'Chapter 5', pdf: 'Jackdaw5.pdf', status: 'On Revision' }
+                        { title: 'Chapter 1', pdf: '1Jackdaw.pdf', status: 'Read now' },
+                        { title: 'Chapter 2', pdf: '2Jackdaw.pdf', status: 'On Revision' },
+                        { title: 'Chapter 3', pdf: '3Jackdaw.pdf', status: 'On Revision' },
+                        { title: 'Chapter 4', pdf: '4Jackdaw.pdf', status: 'On Revision' },
+                        { title: 'Chapter 5', pdf: '5Jackdaw.pdf', status: 'On Revision' }
                     ]
                 },
                 threats: {
